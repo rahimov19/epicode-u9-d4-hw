@@ -1,7 +1,9 @@
-import { GET_JOBS } from "../actions";
+import { GET_JOBS, LOADING_STATE, ERROR_STATE } from "../actions";
 
 const initialState = {
   stock: [],
+  isLoading: true,
+  isError: false,
 };
 const jobsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -9,6 +11,16 @@ const jobsReducer = (state = initialState, action) => {
       return {
         ...state,
         stock: action.payload,
+      };
+    case LOADING_STATE:
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
+    case ERROR_STATE:
+      return {
+        ...state,
+        isError: action.payload,
       };
     default:
       return state;

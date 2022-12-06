@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Col, Row, Button, Container } from "react-bootstrap";
+import { Col, Row, Button, Container, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { removeFromFavsAction } from "../redux/actions";
 
@@ -9,6 +9,7 @@ import { removeFromFavsAction } from "../redux/actions";
 export default function Favs() {
   const jobs = useSelector((state) => state.favjob.content);
   const dispatch = useDispatch();
+  const areLoading = useSelector((state) => state.jobs.isLoading);
 
   return (
     <Container fluid>
@@ -16,6 +17,13 @@ export default function Favs() {
         <h1> Favorites</h1>
         <Col sm={12}>
           <ul style={{ listStyle: "none" }}>
+            {areLoading && (
+              <Spinner
+                animation="border"
+                variant="info"
+                className="ml-2, mt-5"
+              />
+            )}
             {jobs.map((job, i) => (
               <Row key={i} className="my-4 align-items-center">
                 <Col xs={1}>

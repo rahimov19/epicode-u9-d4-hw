@@ -2,6 +2,8 @@ export const REMOVE_FROM_FAVS = "REMOVE_FROM_FAVS";
 export const ADD_COMPANY = "ADD_COMPANY";
 export const GET_JOBS = "GET_JOBS";
 export const SAVE_VALUE = "SAVE_VALUE";
+export const LOADING_STATE = "LOADING_STATE";
+export const ERROR_STATE = "ERROR_STATE";
 
 export const addCompanyAction = (jobs) => {
   return {
@@ -34,11 +36,33 @@ export const fetchJobs = (endpoint) => {
           type: GET_JOBS,
           payload: data,
         });
+        setTimeout(() => {
+          dispatch({
+            type: LOADING_STATE,
+            payload: false,
+          });
+        }, 200);
       } else {
         alert("Error fetching results");
+        dispatch({
+          type: LOADING_STATE,
+          payload: false,
+        });
+        dispatch({
+          type: ERROR_STATE,
+          payload: true,
+        });
       }
     } catch (error) {
       console.log(error);
+      dispatch({
+        type: LOADING_STATE,
+        payload: false,
+      });
+      dispatch({
+        type: ERROR_STATE,
+        payload: true,
+      });
     }
   };
 };
